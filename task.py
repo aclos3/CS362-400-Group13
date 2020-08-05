@@ -11,8 +11,8 @@ def conv_num(num_str):
     asc_arr = []
     has_dec = 0
     aft_dec = 0
-    actual_num = 0
-    
+    act_num = 0
+
     for asc_char in num_str:
         asc_arr.append(ord(asc_char))
         # check to see if charcter is a decimal
@@ -23,34 +23,34 @@ def conv_num(num_str):
     if(has_dec > 1):
         return None
     # assemble a number from the array of characters
-    for x in range(0, len(asc_arr)): 
-        
-        #if string contains a decimal, handle a float
+    for x in range(0, len(asc_arr)):
+ 
+        # if string contains a decimal, handle a float
         if(has_dec):
 
-            # check to see if current character is a decimal 
+            # check to see if current character is a decimal
             if(asc_arr[x] == 46):
                 # flag the location of the decimal
-                aft_dec = x + 1  
+                aft_dec = x + 1
                 # perform some float math since we can't just cast to float()
                 if(aft_dec == len(asc_arr)):
-                    actual_num /= 9.9
-                    actual_num *= 9.9
+                    act_num /= 9.9
+                    act_num *= 9.9
             # digits occurring after decimal
             elif(aft_dec):
-                actual_num += (1 / (10 ** (x - aft_dec + 1)))  * (asc_arr[x] - 48)
-                
+                act_num += (1 / (10 ** (x - aft_dec + 1)))  * (asc_arr[x] - 48)
+ 
             # digits occurring before decimal
             else:
-                actual_num += 10 ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
+                act_num += 10 ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
 
             # trailing decimal multiplier correction
             if(aft_dec == len(asc_arr)):
-                actual_num *= 10
+                act_num *= 10
         else:
-            actual_num += 10 ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+            act_num += 10 ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
 
-    return actual_num
+    return act_num
 
 
 def my_datetime(num_sec):
