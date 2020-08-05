@@ -14,7 +14,7 @@ def my_datetime(num_sec):
     return date_string
 
 
-def conv_endian(num, endian = 'big'):
+def conv_endian(num, endian='big'):
     endian_string = ''
     return endian_string
 
