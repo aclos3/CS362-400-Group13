@@ -29,6 +29,11 @@ class TestConvNum(unittest.TestCase):
         number = conv_num("0.53")
         self.assertEqual(number, 0.53)
 
+    # test a leading zero before integer
+    def test6(self):
+        number = conv_num("053")
+        self.assertEqual(number, 53)
+
 class TestDateTime(unittest.TestCase):
 
     def test1(self):
