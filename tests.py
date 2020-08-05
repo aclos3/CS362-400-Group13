@@ -33,6 +33,11 @@ class TestConvNum(unittest.TestCase):
     def test6(self):
         number = conv_num("053")
         self.assertEqual(number, 53)
+    
+    # test with multiple decimals
+    def test7(self):
+        number = conv_num("0.5.3")
+        self.assertEqual(number, None)
 
 class TestDateTime(unittest.TestCase):
 
