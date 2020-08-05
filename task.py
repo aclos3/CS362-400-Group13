@@ -19,6 +19,9 @@ def conv_num(num_str):
         if(ord(asc_char) == 46):
             has_dec += 1
 
+    # return None if number has more than 1 decimal
+    if(has_dec > 1):
+        return None
     # assemble a number from the array of characters
     for x in range(0, len(asc_arr)): 
         
