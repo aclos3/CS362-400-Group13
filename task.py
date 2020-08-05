@@ -16,4 +16,13 @@ def my_datetime(num_sec):
 
 def conv_endian(num, endian='big'):
     endian_string = ''
+    if endian == 'big':
+        endian_string = ''
+
+    elif endian == 'small':
+        endian_string = ''
+
+    else:
+        endian_string = None
+
     return endian_string

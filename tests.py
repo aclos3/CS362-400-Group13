@@ -18,9 +18,9 @@ class TestDateTime(unittest.TestCase):
 
 class TestEndian(unittest.TestCase):
 
-    def test1(self):
-        endian = conv_endian(234500, 'big')
-        self.assertEqual(endian, '')
+    def test_invalid_endianness(self):
+        endian = conv_endian(234500, 'nothing')
+        self.assertEqual(endian, None)
 
 
 if __name__ == '__main__':
