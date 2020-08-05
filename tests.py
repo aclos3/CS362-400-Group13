@@ -9,6 +9,10 @@ class TestConvNum(unittest.TestCase):
         number = conv_num("523")
         self.assertEqual(number, 523)
 
+    # test a float number
+    def test2(self):
+        number = conv_num("5.3")
+        self.assertEqual(number, 5.3)
 
 class TestDateTime(unittest.TestCase):
 
