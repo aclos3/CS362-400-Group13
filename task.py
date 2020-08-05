@@ -13,9 +13,6 @@ def conv_num(num_str):
     for asc_char in num_str:
         asc_arr.append(ord(asc_char))
 
-    print(asc_arr[0])
-    print(asc_arr[1])
-    print(asc_arr[2])
     # assemble a number from the array of characters
     for x in range(0, len(asc_arr)):
 
