@@ -13,6 +13,11 @@ class TestConvNum(unittest.TestCase):
     def test2(self):
         number = conv_num("5.3")
         self.assertEqual(number, 5.3)
+    
+    # test a float number with leading decimal
+    def test3(self):
+        number = conv_num(".53")
+        self.assertEqual(number, .53)
 
 class TestDateTime(unittest.TestCase):
 
