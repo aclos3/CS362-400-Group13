@@ -17,7 +17,12 @@ class TestConvNum(unittest.TestCase):
     # test a float number with leading decimal
     def test3(self):
         number = conv_num(".53")
-        self.assertEqual(number, .53)
+        self.assertEqual(number, 0.53)
+    
+    # test a float number with trailing decimal
+    def test4(self):
+        number = conv_num("53.")
+        self.assertEqual(number, 53.0)
 
 class TestDateTime(unittest.TestCase):
 

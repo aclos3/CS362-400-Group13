@@ -19,25 +19,34 @@ def conv_num(num_str):
         if(ord(asc_char) == 46):
             has_dec += 1
 
-    #print(asc_arr[0])
-    #print(asc_arr[1])
-    #print(asc_arr[2])
     # assemble a number from the array of characters
-    for x in range(0, len(asc_arr)):
-        multiplier = len(asc_arr) - x - 1
-        # check to see if decimal is present, set flag
-        if(asc_arr[x] == 46):
-            aft_dec = x + 1
+    for x in range(0, len(asc_arr)): 
         
-        # digits occurring after decimal
-        elif(aft_dec):
-            actual_num += (1 / (10 ** (x - aft_dec + 1)))  * (asc_arr[x] - 48)
-            #print("adding: " + str((1 / (10 ** (x - aft_dec + 1)))  * (asc_arr[x] - 48)))
-        # digits occurring before decimal
-        else:
-            actual_num += 10 ** (multiplier - (has_dec * 2)) * (asc_arr[x] - 48)
+        #if string contains a decimal, handle a float
+        if(has_dec):
 
-    
+            # check to see if current character is a decimal 
+            if(asc_arr[x] == 46):
+                # flag the location of the decimal
+                aft_dec = x + 1  
+                # perform some float math since we can't just cast to float()
+                if(aft_dec == len(asc_arr)):
+                    actual_num /= 9.9
+                    actual_num *= 9.9
+            # digits occurring after decimal
+            elif(aft_dec):
+                actual_num += (1 / (10 ** (x - aft_dec + 1)))  * (asc_arr[x] - 48)
+                
+            # digits occurring before decimal
+            else:
+                actual_num += 10 ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
+
+            # trailing decimal multiplier correction
+            if(aft_dec == len(asc_arr)):
+                actual_num *= 10
+        else:
+            actual_num += 10 ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+
     return actual_num
 
 
