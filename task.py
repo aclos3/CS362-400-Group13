@@ -24,7 +24,7 @@ def conv_num(num_str):
         return None
     # assemble a number from the array of characters
     for x in range(0, len(asc_arr)):
- 
+
         # if string contains a decimal, handle a float
         if(has_dec):
 
@@ -38,8 +38,8 @@ def conv_num(num_str):
                     act_num *= 9.9
             # digits occurring after decimal
             elif(aft_dec):
-                act_num += (1 / (10 ** (x - aft_dec + 1)))  * (asc_arr[x] - 48)
- 
+                act_num += (1 / (10 ** (x - aft_dec + 1))) * (asc_arr[x] - 48)
+
             # digits occurring before decimal
             else:
                 act_num += 10 ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
