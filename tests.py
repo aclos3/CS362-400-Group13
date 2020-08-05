@@ -22,6 +22,14 @@ class TestEndian(unittest.TestCase):
         endian = conv_endian(234500, 'nothing')
         self.assertEqual(endian, None)
 
+    def test_positive_big_1(self):
+        endian = conv_endian(954786, 'big')
+        self.assertEqual(endian, '0E 91 A2')
+
+    def test_positive_big_2(self):
+        endian = conv_endian(95478689)
+        self.assertEqual(endian, '05 B0 E3 A1')
+
 
 if __name__ == '__main__':
     unittest.main()
