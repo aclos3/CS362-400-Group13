@@ -81,10 +81,11 @@ def conv_num(num_str):
                         x - flags[2]))) * (asc_arr[x] - 48)
                 # digits occurring before decimal
                 elif(x < flags[2]):
-                    act_num += flags[0] ** (flags[2] - x - 1) * (asc_arr[x] - 48)
+                    act_num += flags[0] ** (
+                        flags[2] - x - 1) * (asc_arr[x] - 48)
             else:
-                act_num += flags[0] ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
-
+                act_num += flags[0] ** (
+                    len(asc_arr) - x - 1) * (asc_arr[x] - 48)
         # check for negative
         if(flags[1] == 1):
             act_num *= -1
