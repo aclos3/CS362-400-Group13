@@ -54,6 +54,10 @@ def conv_num(num_str):
     return act_num
 
 
+def is_leap_year(year):
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
 def my_datetime(num_sec):
     month, day, year = 1, 1, 1970
 
@@ -71,9 +75,21 @@ def my_datetime(num_sec):
     for i in range(days):
         day += 1
 
-        if (month % 2 != 0 and day > 31) or (month % 2 == 0 and day > 30):
-            month += 1
-            day = 1
+        if month == 2:
+            leap = is_leap_year(year)
+            feb_days = 29 if leap else 28
+
+            if day > feb_days:
+                month += 1
+                day = 1
+        elif month < 8:
+            if (month % 2 != 0 and day > 31) or (month % 2 == 0 and day > 30):
+                month += 1
+                day = 1
+        else:
+            if (month % 2 != 0 and day > 30) or (month % 2 == 0 and day > 31):
+                month += 1
+                day = 1
 
     return f'{month:02}-{day:02}-{year}'
 
