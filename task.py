@@ -6,7 +6,7 @@
 ##############################################################################
 import math
 
-# 
+# this function checks for valid characters and converts hex numbers
 def isValid(chkArr, hexChk, decChk):
     valid = False
     

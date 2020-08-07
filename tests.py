@@ -48,6 +48,11 @@ class TestConvNum(unittest.TestCase):
     def test9(self):
         number = conv_num("0x5A")
         self.assertEqual(number, 90)
+    
+    # test a negative hex number
+    def test10(self):
+        number = conv_num("-0x5A")
+        self.assertEqual(number, -90)
 
 class TestDateTime(unittest.TestCase):
 
