@@ -62,6 +62,16 @@ class TestConvNum(unittest.TestCase):
     def test12(self):
         number = conv_num("5a")
         self.assertEqual(number, None)
+    
+    # test hex with mixed cases
+    def test13(self):
+        number = conv_num("0X5a7D")
+        self.assertEqual(number, 23165)
+
+    # test hex with a decimal present
+    def test14(self):
+        number = conv_num("0X5a.7D")
+        self.assertEqual(number, 90.48828125)
 
 class TestDateTime(unittest.TestCase):
 
