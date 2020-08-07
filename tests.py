@@ -75,8 +75,8 @@ class TestConvNum(unittest.TestCase):
 
     # test another decimal number
     def test15(self):
-        number = conv_num("5123.7122")
-        self.assertEqual(number, 5123.7122)
+        number = conv_num("5123.712")
+        self.assertEqual(number, 5123.712)
 
 
 class TestDateTime(unittest.TestCase):

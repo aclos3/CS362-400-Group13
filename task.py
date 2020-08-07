@@ -7,22 +7,15 @@
 import math
 
 
-# this function checks for valid characters and converts hex numbers
-def isValid(chkArr, flagChk, decChk):
-    # check for mutliple decimals
-    if(decChk > 1):
-        return False
-    # check if negative
-    if(chkArr[0] == 45):
-        flagChk[1] = 1
-        del chkArr[:1]
-    # check to see if number is hex
+# this function checks to see if the number is a hex string
+# if it is hex, the alpha characters are converted.
+def isHex(chkArr, flagChk):
+    # check to see if leading characters are '0x'
     if(len(chkArr) > 1 and chkArr[0] == 48 and
             (chkArr[1] == 120 or chkArr[1] == 88)):
         # remove the 0 and x
         del chkArr[:2]
         flagChk[0] = 16  # set base flag to 16
-
         # convert alpha characters
         for x in range(0, len(chkArr)):
             # lower case alpha conversion
@@ -32,6 +25,19 @@ def isValid(chkArr, flagChk, decChk):
             elif(chkArr[x] >= 65 and chkArr[x] <= 70):
                 chkArr[x] -= 7
 
+
+# this function checks for valid characters
+def isValid(chkArr, flagChk, decChk):
+    # check for mutliple decimals
+    if(decChk > 1):
+        return False
+    # check if negative
+    if(chkArr[0] == 45):
+        flagChk[1] = 1
+        del chkArr[:1]
+    
+    isHex(chkArr, flagChk)
+    
     # look for invalid characters
     for x in range(0, len(chkArr)):
         # validate the hex range
