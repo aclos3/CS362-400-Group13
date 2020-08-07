@@ -19,6 +19,15 @@ def isValid(chkArr, hexChk, decChk):
         #print("is hex")
         chkArr[1] = 48
         hexChk[0] = 16
+        # conver alpha characters
+        for x in range (0, len(chkArr)):
+            # lower case alpha conversion
+            if(chkArr[x] >= 97 and chkArr[x] <= 102):
+                chkArr[x] -= 39
+            # upper case alpha conversion
+            elif(chkArr[x] >= 65 and chkArr[x] <= 70):
+                chkArr[x] -= 7
+
         valid = True
 
     else:
