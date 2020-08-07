@@ -40,8 +40,10 @@ def isValid(chkArr, flagChk, decChk):
             return False
         # check for negative anywhere else
         if(x > 0 and chkArr[x] == 45):
-            print("found evil negative")
             return False
+        # locate decimal
+        if(chkArr[x] == 46):
+            flagChk.append(x)
     return True
 
 
@@ -49,7 +51,7 @@ def conv_num(num_str):
     # convert num_str to list of ASCII characters
     asc_arr = []
     has_dec = 0
-    aft_dec = 0
+    #aft_dec = 0
     act_num = 0
     flags = []
     flags.append(10) # base 10 
@@ -60,33 +62,27 @@ def conv_num(num_str):
         # check to see if charcter is a decimal
         if(ord(asc_char) == 46):
             has_dec += 1
-        
-        #print(asc_arr)
  
     if(isValid(asc_arr, flags, has_dec)):
         # assemble a number from the array of characters
         for x in range(0, len(asc_arr)):
             # if string contains a decimal, handle a float
             if(has_dec):
-                # check to see if current character is a decimal
-                if(asc_arr[x] == 46):
-                    # flag the location of the decimal
-                    aft_dec = x + 1
-                    # perform some float math since we can't just cast to float()
-                    if(aft_dec == len(asc_arr)):
-                        act_num /= 9.9
-                        act_num *= 9.9
+                #print("dec loc: " + str(flags[2]))
+                # if decimal occurrs at the end, perform some float math since
+                # we can't just cast to float()
+                if((flags[2] + 1) == len(asc_arr)):
+                    act_num /= 9.9999999999999999999999999999
+                    act_num *= 9.9999999999999999999999999999
+                
                 # digits occurring after decimal
-                elif(aft_dec):
-                    act_num += (1 / (flags[0] ** (x - aft_dec + 1))) * (asc_arr[x] - 48)
+                if(x > flags[2]):
+                    act_num += (1 / (flags[0] ** (x - flags[2]))) * (asc_arr[x] - 48)
 
                 # digits occurring before decimal
-                else:
-                    act_num += flags[0] ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
-
-                # trailing decimal multiplier correction
-                if(aft_dec == len(asc_arr)):
-                    act_num *= flags[0]
+                elif(x < flags[2]):
+                    act_num += flags[0] ** (flags[2] - x - 1) * (asc_arr[x] - 48)
+                    #print("act num: " + str(act_num))
             else:
                 act_num += flags[0] ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
             
