@@ -54,9 +54,49 @@ def conv_num(num_str):
     return act_num
 
 
+def is_leap_year(year):
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
 def my_datetime(num_sec):
-    date_string = ''
-    return date_string
+    month, day, year = 1, 1, 1970
+
+    day_in_seconds = 60 * 60 * 24
+    year_in_seconds = day_in_seconds * 365
+    years = num_sec // year_in_seconds
+    year += years
+
+    # Get the remaining seconds for the year
+    num_sec -= years * year_in_seconds
+    days = num_sec // day_in_seconds
+
+    # Take a day for each leap year
+    for year in range(1970, year + 1):
+        if is_leap_year(year):
+            days -= 1
+
+    # Knuckle method: with the exception of February, odd numbered months
+    # have 31 days, while even numbered 30, but this reverses after July
+    for i in range(days):
+        day += 1
+
+        if month == 2:
+            leap = is_leap_year(year)
+            feb_days = 29 if leap else 28
+
+            if day > feb_days:
+                month += 1
+                day = 1
+        elif month < 8:
+            if (month % 2 != 0 and day > 31) or (month % 2 == 0 and day > 30):
+                month += 1
+                day = 1
+        else:
+            if (month % 2 != 0 and day > 30) or (month % 2 == 0 and day > 31):
+                month += 1
+                day = 1
+
+    return f'{month:02}-{day:02}-{year}'
 
 
 def conv_endian(num, endian='big'):
