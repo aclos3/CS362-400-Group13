@@ -70,6 +70,11 @@ def my_datetime(num_sec):
     num_sec -= years * year_in_seconds
     days = num_sec // day_in_seconds
 
+    # Take a day for each leap year
+    for year in range(1970, year + 1):
+        if is_leap_year(year):
+            days -= 1
+
     # Knuckle method: with the exception of February, odd numbered months
     # have 31 days, while even numbered 30, but this reverses after July
     for i in range(days):
