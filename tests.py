@@ -45,6 +45,9 @@ class TestDateTime(unittest.TestCase):
     def test_epoch(self):
         self.assertEqual(my_datetime(0), '01-01-1970')
 
+    def test_one_month(self):
+        self.assertEqual(my_datetime(31 * 24 * 60 * 60), '02-01-1970')
+
     def test_1973(self):
         self.assertEqual(my_datetime(123456789), '11-29-1973')
 
