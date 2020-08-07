@@ -38,7 +38,11 @@ class TestConvNum(unittest.TestCase):
     def test7(self):
         number = conv_num("0.5.3")
         self.assertEqual(number, None)
-
+    
+    # test a hex number
+    def test8(self):
+        number = conv_num("0x53")
+        self.assertEqual(number, 83)
 
 class TestDateTime(unittest.TestCase):
 
