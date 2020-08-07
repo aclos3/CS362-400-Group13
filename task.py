@@ -36,7 +36,7 @@ def isValid(chkArr, flagChk, decChk):
         if(flagChk[0] == 16 and (chkArr[x] <= 45 or chkArr[x] >= 64)):
             return False
         # validate the decimale range
-        elif(flagChk[0] == 10 and chkArr[x] <= 44 and chkArr[x] >= 58):
+        elif(flagChk[0] == 10 and (chkArr[x] <= 44 or chkArr[x] >= 58)):
             return False
         # check for negative anywhere else
         if(x > 0 and chkArr[x] == 45):
