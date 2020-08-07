@@ -42,9 +42,8 @@ class TestConvNum(unittest.TestCase):
 
 class TestDateTime(unittest.TestCase):
 
-    def test1(self):
-        datetime = my_datetime(45000)
-        self.assertEqual(datetime, '')
+    def test_epoch(self):
+        self.assertEqual(my_datetime(0), '01-01-1970')
 
 
 class TestEndian(unittest.TestCase):

@@ -55,8 +55,8 @@ def conv_num(num_str):
 
 
 def my_datetime(num_sec):
-    date_string = ''
-    return date_string
+    month, day, year = 1, 1, 1970
+    return f'{month:02}-{day:02}-{year}'
 
 
 def conv_endian(num, endian='big'):
