@@ -58,6 +58,7 @@ class TestConvNum(unittest.TestCase):
         number = conv_num("0x-5A")
         self.assertEqual(number, None)
 
+
 class TestDateTime(unittest.TestCase):
 
     def test1(self):

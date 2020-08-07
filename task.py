@@ -8,22 +8,20 @@ import math
 
 # this function checks for valid characters and converts hex numbers
 def isValid(chkArr, flagChk, decChk):
-    valid = False
-    isNeg = 0
-    
     # check for mutliple decimals
     if(decChk > 1):
         return False
     # check if negative
     if(chkArr[0] == 45):
         flagChk[1] = 1
-        chkArr.pop(0)
+        del chkArr[:1]
     # check to see if number is hex
     if(len(chkArr) > 1 and chkArr[0] == 48 and (chkArr[1] == 120 or chkArr[1] == 88)):
-        #print("is hex")
-        chkArr[1] = 48
-        flagChk[0] = 16
-        # conver alpha characters
+        # remove the 0 and x
+        del chkArr[:2]
+        flagChk[0] = 16 # set base flag to 16
+        
+        # convert alpha characters
         for x in range (0, len(chkArr)):
             # lower case alpha conversion
             if(chkArr[x] >= 97 and chkArr[x] <= 102):
@@ -31,11 +29,21 @@ def isValid(chkArr, flagChk, decChk):
             # upper case alpha conversion
             elif(chkArr[x] >= 65 and chkArr[x] <= 70):
                 chkArr[x] -= 7
-        valid = True
-    else:
-        valid = True
     
-    return valid
+    # look for invalid characters
+    for x in range (0, len(chkArr)):
+        # validate the hex range
+        if(flagChk[0] == 16 and (chkArr[x] <= 45 or chkArr[x] >= 64)):
+            return False
+        # validate the decimale range
+        elif(flagChk[0] == 10 and chkArr[x] <= 44 and chkArr[x] >= 58):
+            return False
+        # check for negative anywhere else
+        if(x > 0 and chkArr[x] == 45):
+            print("found evil negative")
+            return False
+    return True
+
 
 def conv_num(num_str):
     # convert num_str to list of ASCII characters
