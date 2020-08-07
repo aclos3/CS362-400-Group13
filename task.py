@@ -78,7 +78,7 @@ def conv_num(num_str):
                 # digits occurring after decimal
                 if(x > flags[2]):
                     act_num += (1 / (flags[0] ** (
-                    x - flags[2]))) * (asc_arr[x] - 48)
+                        x - flags[2]))) * (asc_arr[x] - 48)
                 # digits occurring before decimal
                 elif(x < flags[2]):
                     act_num += flags[0] ** (flags[2] - x - 1) * (asc_arr[x] - 48)
