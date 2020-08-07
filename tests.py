@@ -43,6 +43,11 @@ class TestConvNum(unittest.TestCase):
     def test8(self):
         number = conv_num("0x53")
         self.assertEqual(number, 83)
+    
+    # test a hex number with alpha character
+    def test9(self):
+        number = conv_num("0x5A")
+        self.assertEqual(number, 90)
 
 class TestDateTime(unittest.TestCase):
 
