@@ -28,7 +28,7 @@ def isHex(chkArr, flagChk):
 
 # this function checks for valid characters
 def isValid(chkArr, flagChk, decChk):
-    # check for mutliple decimals
+    # check for mutliple decimals or an empty string
     if(decChk > 1 or chkArr == []):
         return False
     # check if negative
