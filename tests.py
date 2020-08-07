@@ -53,6 +53,11 @@ class TestConvNum(unittest.TestCase):
         number = conv_num("-0x5A")
         self.assertEqual(number, -90)
 
+    # test with negative number in wrong position
+    def test11(self):
+        number = conv_num("0x-5A")
+        self.assertEqual(number, None)
+
 class TestDateTime(unittest.TestCase):
 
     def test1(self):
