@@ -6,6 +6,25 @@
 ##############################################################################
 import math
 
+# 
+def isValid(chkArr, hexChk, decChk):
+    valid = False
+    
+    # check for mutliple decimals
+    if(decChk > 1):
+        return False
+
+    # check to see if number is hex
+    if(len(chkArr) > 1 and chkArr[0] == 48 and (chkArr[1] == 120 or chkArr[1] == 88)):
+        #print("is hex")
+        chkArr[1] = 48
+        hexChk[0] = 16
+        valid = True
+
+    else:
+        valid = True
+    return valid
+
 
 def conv_num(num_str):
     # convert num_str to list of ASCII characters
@@ -13,43 +32,45 @@ def conv_num(num_str):
     has_dec = 0
     aft_dec = 0
     act_num = 0
+    isHex = []
+    isHex.append(10)
 
     for asc_char in num_str:
         asc_arr.append(ord(asc_char))
         # check to see if charcter is a decimal
         if(ord(asc_char) == 46):
             has_dec += 1
+        
+        #print(asc_arr)
+ 
+    if(isValid(asc_arr, isHex, has_dec)):
+        # assemble a number from the array of characters
+        for x in range(0, len(asc_arr)):
+            # if string contains a decimal, handle a float
+            if(has_dec):
+                # check to see if current character is a decimal
+                if(asc_arr[x] == 46):
+                    # flag the location of the decimal
+                    aft_dec = x + 1
+                    # perform some float math since we can't just cast to float()
+                    if(aft_dec == len(asc_arr)):
+                        act_num /= 9.9
+                        act_num *= 9.9
+                # digits occurring after decimal
+                elif(aft_dec):
+                    act_num += (1 / (isHex[0] ** (x - aft_dec + 1))) * (asc_arr[x] - 48)
 
-    # return None if number has more than 1 decimal
-    if(has_dec > 1):
-        return None
-    # assemble a number from the array of characters
-    for x in range(0, len(asc_arr)):
+                # digits occurring before decimal
+                else:
+                    act_num += isHex[0] ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
 
-        # if string contains a decimal, handle a float
-        if(has_dec):
-
-            # check to see if current character is a decimal
-            if(asc_arr[x] == 46):
-                # flag the location of the decimal
-                aft_dec = x + 1
-                # perform some float math since we can't just cast to float()
+                # trailing decimal multiplier correction
                 if(aft_dec == len(asc_arr)):
-                    act_num /= 9.9
-                    act_num *= 9.9
-            # digits occurring after decimal
-            elif(aft_dec):
-                act_num += (1 / (10 ** (x - aft_dec + 1))) * (asc_arr[x] - 48)
-
-            # digits occurring before decimal
+                    act_num *= isHex[0]
             else:
-                act_num += 10 ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
-
-            # trailing decimal multiplier correction
-            if(aft_dec == len(asc_arr)):
-                act_num *= 10
-        else:
-            act_num += 10 ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+                act_num += isHex[0] ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+    else:
+        act_num = None
 
     return act_num
 
