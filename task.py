@@ -6,6 +6,7 @@
 ##############################################################################
 import math
 
+
 # this function checks for valid characters and converts hex numbers
 def isValid(chkArr, flagChk, decChk):
     # check for mutliple decimals
@@ -16,13 +17,14 @@ def isValid(chkArr, flagChk, decChk):
         flagChk[1] = 1
         del chkArr[:1]
     # check to see if number is hex
-    if(len(chkArr) > 1 and chkArr[0] == 48 and (chkArr[1] == 120 or chkArr[1] == 88)):
+    if(len(chkArr) > 1 and chkArr[0] == 48 and
+            (chkArr[1] == 120 or chkArr[1] == 88)):
         # remove the 0 and x
         del chkArr[:2]
-        flagChk[0] = 16 # set base flag to 16
+        flagChk[0] = 16  # set base flag to 16
 
         # convert alpha characters
-        for x in range (0, len(chkArr)):
+        for x in range(0, len(chkArr)):
             # lower case alpha conversion
             if(chkArr[x] >= 97 and chkArr[x] <= 102):
                 chkArr[x] -= 39
@@ -31,7 +33,7 @@ def isValid(chkArr, flagChk, decChk):
                 chkArr[x] -= 7
 
     # look for invalid characters
-    for x in range (0, len(chkArr)):
+    for x in range(0, len(chkArr)):
         # validate the hex range
         if(flagChk[0] == 16 and (chkArr[x] <= 45 or chkArr[x] >= 64)):
             return False
@@ -53,8 +55,8 @@ def conv_num(num_str):
     has_dec = 0
     act_num = 0
     flags = []
-    flags.append(10) # base 10 
-    flags.append(0) # is negative
+    flags.append(10)  # base 10
+    flags.append(0)  # is negative
 
     for asc_char in num_str:
         asc_arr.append(ord(asc_char))
@@ -75,12 +77,15 @@ def conv_num(num_str):
 
                 # digits occurring after decimal
                 if(x > flags[2]):
-                    act_num += (1 / (flags[0] ** (x - flags[2]))) * (asc_arr[x] - 48)
+                    act_num +=
+                    (1 / (flags[0] ** (x - flags[2]))) * (asc_arr[x] - 48)
                 # digits occurring before decimal
                 elif(x < flags[2]):
-                    act_num += flags[0] ** (flags[2] - x - 1) * (asc_arr[x] - 48)
+                    act_num +=
+                    flags[0] ** (flags[2] - x - 1) * (asc_arr[x] - 48)
             else:
-                act_num += flags[0] ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+                act_num +=
+                flags[0] ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
 
         # check for negative
         if(flags[1] == 1):
