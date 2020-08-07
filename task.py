@@ -7,12 +7,62 @@
 import math
 
 
+# this function checks to see if the number is a hex string
+# if it is hex, the alpha characters are converted.
+def isHex(chkArr, flagChk):
+    # check to see if leading characters are '0x'
+    if(len(chkArr) > 2 and chkArr[0] == 48 and
+            (chkArr[1] == 120 or chkArr[1] == 88)):
+        # remove the 0 and x
+        del chkArr[:2]
+        flagChk[0] = 16  # set base flag to 16
+        # convert alpha characters
+        for x in range(0, len(chkArr)):
+            # lower case alpha conversion
+            if(chkArr[x] >= 97 and chkArr[x] <= 102):
+                chkArr[x] -= 39
+            # upper case alpha conversion
+            elif(chkArr[x] >= 65 and chkArr[x] <= 70):
+                chkArr[x] -= 7
+
+
+# this function checks for valid characters
+def isValid(chkArr, flagChk, decChk):
+    # check for mutliple decimals or an empty string
+    if(decChk > 1 or chkArr == []):
+        return False
+    # check if negative
+    if(chkArr[0] == 45):
+        flagChk[1] = 1
+        del chkArr[:1]
+
+    isHex(chkArr, flagChk)
+
+    # look for invalid characters
+    for x in range(0, len(chkArr)):
+        # validate the hex range
+        if(flagChk[0] == 16 and (chkArr[x] <= 45 or chkArr[x] >= 64)):
+            return False
+        # validate the decimale range
+        elif(flagChk[0] == 10 and (chkArr[x] <= 44 or chkArr[x] >= 58)):
+            return False
+        # check for negative anywhere else
+        if(x > 0 and chkArr[x] == 45):
+            return False
+        # locate decimal
+        if(chkArr[x] == 46):
+            flagChk.append(x)
+    return True
+
+
 def conv_num(num_str):
     # convert num_str to list of ASCII characters
     asc_arr = []
     has_dec = 0
-    aft_dec = 0
     act_num = 0
+    flags = []
+    flags.append(10)  # base 10
+    flags.append(0)  # is negative
 
     for asc_char in num_str:
         asc_arr.append(ord(asc_char))
@@ -20,36 +70,33 @@ def conv_num(num_str):
         if(ord(asc_char) == 46):
             has_dec += 1
 
-    # return None if number has more than 1 decimal
-    if(has_dec > 1):
-        return None
-    # assemble a number from the array of characters
-    for x in range(0, len(asc_arr)):
+    if(isValid(asc_arr, flags, has_dec)):
+        # assemble a number from the array of characters
+        for x in range(0, len(asc_arr)):
+            # if string contains a decimal, handle a float
+            if(has_dec):
+                # if decimal occurrs at the end, perform some float math since
+                # we can't just cast to float()
+                if((flags[2] + 1) == len(asc_arr)):
+                    act_num /= 9.9999999999999999999999999999
+                    act_num *= 9.9999999999999999999999999999
 
-        # if string contains a decimal, handle a float
-        if(has_dec):
-
-            # check to see if current character is a decimal
-            if(asc_arr[x] == 46):
-                # flag the location of the decimal
-                aft_dec = x + 1
-                # perform some float math since we can't just cast to float()
-                if(aft_dec == len(asc_arr)):
-                    act_num /= 9.9
-                    act_num *= 9.9
-            # digits occurring after decimal
-            elif(aft_dec):
-                act_num += (1 / (10 ** (x - aft_dec + 1))) * (asc_arr[x] - 48)
-
-            # digits occurring before decimal
+                # digits occurring after decimal
+                if(x > flags[2]):
+                    act_num += (1 / (flags[0] ** (
+                        x - flags[2]))) * (asc_arr[x] - 48)
+                # digits occurring before decimal
+                elif(x < flags[2]):
+                    act_num += flags[0] ** (
+                        flags[2] - x - 1) * (asc_arr[x] - 48)
             else:
-                act_num += 10 ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
-
-            # trailing decimal multiplier correction
-            if(aft_dec == len(asc_arr)):
-                act_num *= 10
-        else:
-            act_num += 10 ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+                act_num += flags[0] ** (
+                    len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+        # check for negative
+        if(flags[1] == 1):
+            act_num *= -1
+    else:
+        act_num = None
 
     return act_num
 

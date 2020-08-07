@@ -3,7 +3,6 @@ from task import conv_num, my_datetime, conv_endian
 
 
 class TestConvNum(unittest.TestCase):
-
     # test a basic string representing an integer
     def test1(self):
         number = conv_num("523")
@@ -37,6 +36,57 @@ class TestConvNum(unittest.TestCase):
     # test with multiple decimals
     def test7(self):
         number = conv_num("0.5.3")
+        self.assertEqual(number, None)
+
+    # test a hex number
+    def test8(self):
+        number = conv_num("0x53")
+        self.assertEqual(number, 83)
+
+    # test a hex number with alpha character
+    def test9(self):
+        number = conv_num("0x5A")
+        self.assertEqual(number, 90)
+
+    # test a negative hex number
+    def test10(self):
+        number = conv_num("-0x5A")
+        self.assertEqual(number, -90)
+
+    # test with negative number in wrong position
+    def test11(self):
+        number = conv_num("0x-5A")
+        self.assertEqual(number, None)
+
+    # test hex without leading 0x
+    def test12(self):
+        number = conv_num("5a")
+        self.assertEqual(number, None)
+
+    # test hex with mixed cases
+    def test13(self):
+        number = conv_num("0X5a7D")
+        self.assertEqual(number, 23165)
+
+    # test hex with a decimal present
+    def test14(self):
+        number = conv_num("0X5a.7D")
+        self.assertEqual(number, 90.48828125)
+
+    # test another decimal number
+    # note: This test currently fails!
+    def test15(self):
+        number = conv_num("5123.712")
+        self.assertEqual(number, 5123.712)
+
+    # test just '0x'
+    def test16(self):
+        number = conv_num("0x")
+        self.assertEqual(number, None)
+
+    # test the empty string
+    def test17(self):
+        number = conv_num("")
         self.assertEqual(number, None)
 
 
