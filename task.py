@@ -35,9 +35,9 @@ def isValid(chkArr, flagChk, decChk):
     if(chkArr[0] == 45):
         flagChk[1] = 1
         del chkArr[:1]
-    
+
     isHex(chkArr, flagChk)
-    
+
     # look for invalid characters
     for x in range(0, len(chkArr)):
         # validate the hex range
