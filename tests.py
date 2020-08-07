@@ -57,7 +57,11 @@ class TestConvNum(unittest.TestCase):
     def test11(self):
         number = conv_num("0x-5A")
         self.assertEqual(number, None)
-
+    
+    # test hex without leading 0x
+    def test12(self):
+        number = conv_num("5a")
+        self.assertEqual(number, None)
 
 class TestDateTime(unittest.TestCase):
 
