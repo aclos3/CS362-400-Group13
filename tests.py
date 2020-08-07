@@ -9,6 +9,36 @@ class TestConvNum(unittest.TestCase):
         number = conv_num("523")
         self.assertEqual(number, 523)
 
+    # test a float number
+    def test2(self):
+        number = conv_num("5.3")
+        self.assertEqual(number, 5.3)
+
+    # test a float number with leading decimal
+    def test3(self):
+        number = conv_num(".53")
+        self.assertEqual(number, 0.53)
+
+    # test a float number with trailing decimal
+    def test4(self):
+        number = conv_num("53.")
+        self.assertEqual(number, 53.0)
+
+    # test a leading zero before decimal
+    def test5(self):
+        number = conv_num("0.53")
+        self.assertEqual(number, 0.53)
+
+    # test a leading zero before integer
+    def test6(self):
+        number = conv_num("053")
+        self.assertEqual(number, 53)
+
+    # test with multiple decimals
+    def test7(self):
+        number = conv_num("0.5.3")
+        self.assertEqual(number, None)
+
 
 class TestDateTime(unittest.TestCase):
 
