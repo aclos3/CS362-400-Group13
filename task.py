@@ -7,18 +7,22 @@
 import math
 
 # this function checks for valid characters and converts hex numbers
-def isValid(chkArr, hexChk, decChk):
+def isValid(chkArr, flagChk, decChk):
     valid = False
+    isNeg = 0
     
     # check for mutliple decimals
     if(decChk > 1):
         return False
-
+    # check if negative
+    if(chkArr[0] == 45):
+        flagChk[1] = 1
+        chkArr.pop(0)
     # check to see if number is hex
     if(len(chkArr) > 1 and chkArr[0] == 48 and (chkArr[1] == 120 or chkArr[1] == 88)):
         #print("is hex")
         chkArr[1] = 48
-        hexChk[0] = 16
+        flagChk[0] = 16
         # conver alpha characters
         for x in range (0, len(chkArr)):
             # lower case alpha conversion
@@ -27,13 +31,11 @@ def isValid(chkArr, hexChk, decChk):
             # upper case alpha conversion
             elif(chkArr[x] >= 65 and chkArr[x] <= 70):
                 chkArr[x] -= 7
-
         valid = True
-
     else:
         valid = True
+    
     return valid
-
 
 def conv_num(num_str):
     # convert num_str to list of ASCII characters
@@ -41,8 +43,9 @@ def conv_num(num_str):
     has_dec = 0
     aft_dec = 0
     act_num = 0
-    isHex = []
-    isHex.append(10)
+    flags = []
+    flags.append(10) # base 10 
+    flags.append(0) # is negative
 
     for asc_char in num_str:
         asc_arr.append(ord(asc_char))
@@ -52,7 +55,7 @@ def conv_num(num_str):
         
         #print(asc_arr)
  
-    if(isValid(asc_arr, isHex, has_dec)):
+    if(isValid(asc_arr, flags, has_dec)):
         # assemble a number from the array of characters
         for x in range(0, len(asc_arr)):
             # if string contains a decimal, handle a float
@@ -67,17 +70,21 @@ def conv_num(num_str):
                         act_num *= 9.9
                 # digits occurring after decimal
                 elif(aft_dec):
-                    act_num += (1 / (isHex[0] ** (x - aft_dec + 1))) * (asc_arr[x] - 48)
+                    act_num += (1 / (flags[0] ** (x - aft_dec + 1))) * (asc_arr[x] - 48)
 
                 # digits occurring before decimal
                 else:
-                    act_num += isHex[0] ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
+                    act_num += flags[0] ** (len(asc_arr) - x - 3) * (asc_arr[x] - 48)
 
                 # trailing decimal multiplier correction
                 if(aft_dec == len(asc_arr)):
-                    act_num *= isHex[0]
+                    act_num *= flags[0]
             else:
-                act_num += isHex[0] ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+                act_num += flags[0] ** (len(asc_arr) - x - 1) * (asc_arr[x] - 48)
+            
+        # check for negative
+        if(flags[1] == 1):
+            act_num *= -1
     else:
         act_num = None
 

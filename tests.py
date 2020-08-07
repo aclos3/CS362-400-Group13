@@ -3,7 +3,6 @@ from task import conv_num, my_datetime, conv_endian
 
 
 class TestConvNum(unittest.TestCase):
-
     # test a basic string representing an integer
     def test1(self):
         number = conv_num("523")
@@ -48,7 +47,7 @@ class TestConvNum(unittest.TestCase):
     def test9(self):
         number = conv_num("0x5A")
         self.assertEqual(number, 90)
-    
+
     # test a negative hex number
     def test10(self):
         number = conv_num("-0x5A")
