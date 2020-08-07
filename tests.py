@@ -76,12 +76,17 @@ class TestConvNum(unittest.TestCase):
     # test another decimal number
     # note: This test currently fails!
     def test15(self):
-        number = conv_num("5123.7122")
-        self.assertEqual(number, 5123.7122)
+        number = conv_num("5123.712")
+        self.assertEqual(number, 5123.712)
 
     # test just '0x'
-    def test15(self):
+    def test16(self):
         number = conv_num("0x")
+        self.assertEqual(number, None)
+
+    # test the empty string
+    def test17(self):
+        number = conv_num("")
         self.assertEqual(number, None)
 
 

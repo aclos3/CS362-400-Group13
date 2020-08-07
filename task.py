@@ -29,7 +29,7 @@ def isHex(chkArr, flagChk):
 # this function checks for valid characters
 def isValid(chkArr, flagChk, decChk):
     # check for mutliple decimals
-    if(decChk > 1):
+    if(decChk > 1 or chkArr == []):
         return False
     # check if negative
     if(chkArr[0] == 45):
