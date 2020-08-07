@@ -11,7 +11,7 @@ import math
 # if it is hex, the alpha characters are converted.
 def isHex(chkArr, flagChk):
     # check to see if leading characters are '0x'
-    if(len(chkArr) > 1 and chkArr[0] == 48 and
+    if(len(chkArr) > 2 and chkArr[0] == 48 and
             (chkArr[1] == 120 or chkArr[1] == 88)):
         # remove the 0 and x
         del chkArr[:2]
