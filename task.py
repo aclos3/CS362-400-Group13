@@ -147,6 +147,12 @@ def my_datetime(num_sec):
                 month += 1
                 day = 1
 
+    # Account for overflow on the last day of the year
+    if month > 12:
+        month = 1
+        day = 1
+        year += 1
+
     return f'{month:02}-{day:02}-{year}'
 
 
