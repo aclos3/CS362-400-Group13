@@ -98,8 +98,26 @@ class TestDateTime(unittest.TestCase):
     def test_one_month(self):
         self.assertEqual(my_datetime(31 * 24 * 60 * 60), '02-01-1970')
 
+    def test_two_months(self):
+        self.assertEqual(my_datetime(2 * 31 * 24 * 60 * 60), '03-04-1970')
+
     def test_1973(self):
         self.assertEqual(my_datetime(123456789), '11-29-1973')
+
+    def test_2282(self):
+        self.assertEqual(my_datetime(9876543210), '12-22-2282')
+
+    def test_2020(self):
+        self.assertEqual(my_datetime(1596912605), '08-08-2020')
+
+    def test_2020_beginning(self):
+        self.assertEqual(my_datetime(1577836800), '01-01-2020')
+
+    def test_2020_end(self):
+        self.assertEqual(my_datetime(1609459199), '12-31-2020')
+
+    def test_leap_day(self):
+        self.assertEqual(my_datetime(1709164800), '02-29-2024')
 
 
 class TestEndian(unittest.TestCase):

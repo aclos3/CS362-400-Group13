@@ -102,6 +102,7 @@ def conv_num(num_str):
 
 
 def is_leap_year(year):
+    """Checks if the given year is a leap year"""
     return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 
@@ -109,39 +110,51 @@ def my_datetime(num_sec):
     month, day, year = 1, 1, 1970
 
     day_in_seconds = 60 * 60 * 24
-    year_in_seconds = day_in_seconds * 365
+
+    # Use exact year length for accurate number of years
+    year_in_seconds = round(day_in_seconds * 365.25)
     years = num_sec // year_in_seconds
     year += years
 
     # Get the remaining seconds for the year
+    year_in_seconds = day_in_seconds * 365
     num_sec -= years * year_in_seconds
     days = num_sec // day_in_seconds
 
     # Take a day for each leap year
-    for year in range(1970, year + 1):
-        if is_leap_year(year):
+    for cur_year in range(1970, year):
+        if is_leap_year(cur_year):
             days -= 1
+
+    # If days < 0, we went too far in years because of
+    # miscalculation regarding leap seconds, so adjust
+    if days < 0:
+        days = 365
+        year -= 1
 
     # Knuckle method: with the exception of February, odd numbered months
     # have 31 days, while even numbered 30, but this reverses after July
     for i in range(days):
         day += 1
+        days_in_month = 31
 
         if month == 2:
             leap = is_leap_year(year)
-            feb_days = 29 if leap else 28
+            days_in_month = 29 if leap else 28
+        elif month < 8 and month % 2 == 0:
+            days_in_month = 30
+        elif month >= 8 and month % 2 != 0:
+            days_in_month = 30
 
-            if day > feb_days:
-                month += 1
-                day = 1
-        elif month < 8:
-            if (month % 2 != 0 and day > 31) or (month % 2 == 0 and day > 30):
-                month += 1
-                day = 1
-        else:
-            if (month % 2 != 0 and day > 30) or (month % 2 == 0 and day > 31):
-                month += 1
-                day = 1
+        if day > days_in_month:
+            day = 1
+            month += 1
+
+    # Account for overflow on the last day of the year
+    if month > 12:
+        month = 1
+        day = 1
+        year += 1
 
     return f'{month:02}-{day:02}-{year}'
 
