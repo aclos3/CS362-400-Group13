@@ -109,11 +109,14 @@ def my_datetime(num_sec):
     month, day, year = 1, 1, 1970
 
     day_in_seconds = 60 * 60 * 24
-    year_in_seconds = day_in_seconds * 365
+
+    # Use exact year length for accurate number of years
+    year_in_seconds = round(day_in_seconds * 365.25)
     years = num_sec // year_in_seconds
     year += years
 
     # Get the remaining seconds for the year
+    year_in_seconds = day_in_seconds * 365
     num_sec -= years * year_in_seconds
     days = num_sec // day_in_seconds
 
