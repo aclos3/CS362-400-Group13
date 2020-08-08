@@ -116,6 +116,9 @@ class TestDateTime(unittest.TestCase):
     def test_2020_end(self):
         self.assertEqual(my_datetime(1609459199), '12-31-2020')
 
+    def test_leap_day(self):
+        self.assertEqual(my_datetime(1709164800), '02-29-2024')
+
 
 class TestEndian(unittest.TestCase):
 
