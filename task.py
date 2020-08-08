@@ -203,9 +203,14 @@ def string_from_digits_map(digits, big_endian):
     for x in range(most_sig_digit, 0, -2):
         byte_chars.append(digits[x] + digits[x - 1])
 
+    return concat_byte_strings(byte_chars, big_endian)
+
+
+def concat_byte_strings(byte_chars, is_big_endian):
+
     # put bytes together in endian order with spaces
     spaced_string = ''
-    if big_endian:
+    if is_big_endian:
         for x in byte_chars:
             spaced_string += x + ' '
     else:
