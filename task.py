@@ -126,6 +126,12 @@ def my_datetime(num_sec):
         if is_leap_year(cur_year):
             days -= 1
 
+    # If days < 0, we went too far in years because of
+    # miscalculation regarding leap seconds, so adjust
+    if days < 0:
+        days = 365
+        year -= 1
+
     # Knuckle method: with the exception of February, odd numbered months
     # have 31 days, while even numbered 30, but this reverses after July
     for i in range(days):
