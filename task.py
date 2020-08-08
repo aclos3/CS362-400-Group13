@@ -136,22 +136,19 @@ def my_datetime(num_sec):
     # have 31 days, while even numbered 30, but this reverses after July
     for i in range(days):
         day += 1
+        days_in_month = 31
 
         if month == 2:
             leap = is_leap_year(year)
-            feb_days = 29 if leap else 28
+            days_in_month = 29 if leap else 28
+        elif month < 8 and month % 2 == 0:
+            days_in_month = 30
+        elif month >= 8 and month % 2 != 0:
+            days_in_month = 30
 
-            if day > feb_days:
-                month += 1
-                day = 1
-        elif month < 8:
-            if (month % 2 != 0 and day > 31) or (month % 2 == 0 and day > 30):
-                month += 1
-                day = 1
-        else:
-            if (month % 2 != 0 and day > 30) or (month % 2 == 0 and day > 31):
-                month += 1
-                day = 1
+        if day > days_in_month:
+            day = 1
+            month += 1
 
     # Account for overflow on the last day of the year
     if month > 12:
