@@ -107,6 +107,9 @@ class TestDateTime(unittest.TestCase):
     def test_2282(self):
         self.assertEqual(my_datetime(9876543210), '12-22-2282')
 
+    def test_2020(self):
+        self.assertEqual(my_datetime(1596912605), '08-08-2020')
+
 
 class TestEndian(unittest.TestCase):
 
