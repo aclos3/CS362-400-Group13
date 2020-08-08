@@ -154,6 +154,7 @@ def conv_endian(num, endian='big'):
     endian_string = ''
     if num < 0:
         endian_string = '-'
+        num = num * -1
 
     remaining = num
     while remaining > 0:
@@ -177,6 +178,10 @@ def string_from_digits_map(digits, big_endian):
     values should be hex digits (0-9, A-F)
     big_endian is boolean, converts to little-endian if false
     """
+    # check for empty digits (case of 0)
+    if not bool(digits):
+        return '00'
+
     # find most significant digit
     most_sig_digit = 0
     for x in digits:
@@ -198,14 +203,22 @@ def string_from_digits_map(digits, big_endian):
     for x in range(most_sig_digit, 0, -2):
         byte_chars.append(digits[x] + digits[x - 1])
 
-    # TODO order based on endianness
+    return concat_byte_strings(byte_chars, big_endian)
+
+
+def concat_byte_strings(byte_chars, is_big_endian):
+
+    # put bytes together in endian order with spaces
     spaced_string = ''
-    for x in byte_chars:
-        spaced_string += x + ' '
+    if is_big_endian:
+        for x in byte_chars:
+            spaced_string += x + ' '
+    else:
+        for x in byte_chars:
+            spaced_string = x + ' ' + spaced_string
 
     # remove trailing space
     spaced_string = spaced_string[:-1]
-
     return spaced_string
 
 
